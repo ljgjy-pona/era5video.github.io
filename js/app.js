@@ -7,9 +7,21 @@ const filters = {
 
 // 初始化加载
 fetch('/videos.json')
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status} 错误`);
+    return res.json();
+  })
   .then(renderVideos)
-  .catch(showError);
+  .catch(error => {
+    const errorHtml = `
+      <div class="load-error">
+        <h3>加载失败</h3>
+        <p>原因：${error.message}</p>
+        <button onclick="location.reload()">点击重试</button>
+      </div>
+    `;
+    document.getElementById('videoContainer').innerHTML = errorHtml;
+  });
 
 function renderVideos(videos) {
   videoContainer.innerHTML = videos.map(video => `
