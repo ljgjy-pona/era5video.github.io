@@ -1,3 +1,13 @@
+// 使用绝对路径避免路径问题
+const JSON_URL = '/data/videos.json'; 
+
+fetch(JSON_URL)
+  .then(response => response.json())
+  .then(data => {
+    window.videoData = data;
+    renderVideos(data);
+  })
+  .catch(error => console.error('数据加载失败:', error));
 // 初始化加载
 document.addEventListener('DOMContentLoaded', loadVideos);
 
