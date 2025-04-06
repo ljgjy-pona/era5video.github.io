@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",   
+    "id": 1,   
     "title": "2024 2m temperature ",
     "features": {
       "category":  "2024",
@@ -11,7 +11,7 @@
     "driveid": "1v-nHIzfKW_McyGoSrVr97Vtz-hpF17QD"
   },
   {
-    "id": "2",
+    "id": 2,
     "title": "2024 10m wind ",
     "features": {
       "category":  "2024",
@@ -22,7 +22,7 @@
     "driveid": "14ggyVGME9wFs1WcbgMck9W09-NBUX3Ll"
   },
   {
-    "id": "3",
+    "id": 3,
     "title": "2024 2m msl",
     "features": {
       "category":  "2024",
