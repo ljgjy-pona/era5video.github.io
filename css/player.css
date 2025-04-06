@@ -1,0 +1,35 @@
+/* 播放器容器 */
+.player-wrapper {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #1a1a1a;
+    border-radius: 8px;
+  }
+  
+  /* 下载按钮样式 */
+  .download-section {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .download-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #2196F3;
+    color: white !important;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  
+  .download-btn:hover {
+    background: #1976D2;
+  }
+  
+  /* 错误提示 */
+  .error {
+    color: #ff4444;
+    padding: 20px;
+    text-align: center;
+  }
