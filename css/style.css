@@ -1,19 +1,50 @@
+:root {
+  --primary-color: #2196F3;
+  --text-dark: #2c3e50;
+  --breakpoint-md: 768px;
+}
+
+/* 响应式网格布局 */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
 .video-card {
-    display: inline-block;
-    width: 300px;
-    margin: 10px;
-    text-align: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+/* 筛选栏样式 */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
   }
-  .video-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  .filters {
-    margin: 20px;
-    text-align: center;
-  }
-  #videoGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
+}
+  

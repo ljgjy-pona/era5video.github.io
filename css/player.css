@@ -1,35 +1,36 @@
-/* 播放器容器 */
-.player-wrapper {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 15px;
-    background: #1a1a1a;
-    border-radius: 8px;
-  }
-  
-  /* 下载按钮样式 */
-  .download-section {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .download-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    background: #2196F3;
-    color: white !important;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background 0.3s;
-  }
-  
-  .download-btn:hover {
-    background: #1976D2;
-  }
-  
-  /* 错误提示 */
-  .error {
-    color: #ff4444;
-    padding: 20px;
-    text-align: center;
-  }
+.player-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.video-js {
+  width: 100%;
+  height: 70vh;
+  background: #000;
+}
+
+.download-area {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.download-button:hover {
+  background: #1976d2;
+}
+
+.icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.5rem;
+}
