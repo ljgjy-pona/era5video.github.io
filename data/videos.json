@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1v-nHIzfKW_McyGoSrVr97Vtz-hpF17QD",
+    "title": "2024 2m temperature hourly",
+    "year": 2024,
+    "category": "2m temperature",
+    "thumbnail": "assets/thumbs/2024 2m temperature.png",
+    "description": "2024 hourly 2m temperature"
+  },
+]
+[
+  {
+    "id": "14ggyVGME9wFs1WcbgMck9W09-NBUX3Ll",
+    "title": "2024 10m wind hourly",
+    "year": 2024,
+    "category": "10m wind",
+    "thumbnail": "assets/thumbs/2024 10m wind.png",
+    "description": "2024 hourly 10m wind"
+  },
+]
+[
+  {
+    "id": "18Dz5ImgHxJNodOEdduf5osQeiKpDXNFt",
+    "title": "2024 2m msl",
+    "year": 2024,
+    "category": "2m msl",
+    "thumbnail": "assets/thumbs/2024 msl.png",
+    "description": "2024 hourly mean sea level pressure"
+  },
+]
