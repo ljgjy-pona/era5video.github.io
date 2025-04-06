@@ -47,4 +47,22 @@
     padding: 1rem;
   }
 }
-  
+
+.error-alert {
+  padding: 1.5rem;
+  background: #ffe6e6;
+  border: 1px solid #ff4444;
+  border-radius: 8px;
+  color: #cc0000;
+  margin: 2rem;
+}
+
+.load-error button {
+  margin-top: 1rem;
+  padding: 8px 16px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
