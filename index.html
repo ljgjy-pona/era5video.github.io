@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>视频资料库</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <title>视频库</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="filters">
-    <input type="text" id="searchInput" placeholder="Search...">
-    <select id="yearFilter">
-      <option value="">all years</option>
+    <select id="year">
+      <option value="">years</option>
       <option>2024</option>
       <option>2023</option>
     </select>
-    <select id="categoryFilter">
-      <option value="">all variables</option>
-      <option>10m wind</option>
+    <select id="variable">
+      <option value="">variables</option>
       <option>2m temperature</option>
+      <option>10m wind</option>
       <option>msl</option>
     </select>
+    <input type="text" id="search" placeholder="Search...">
   </div>
-
-  <div class="video-grid" id="videoContainer">
-    <!-- 动态加载视频卡片 -->
-  </div>
-
-  <script src="assets/js/app.js"></script>
+  <div id="videoGrid"></div>
+  <script src="app.js"></script>
 </body>
 </html>
