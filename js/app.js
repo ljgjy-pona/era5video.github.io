@@ -1,34 +1,50 @@
-let videos = [];
+const videoContainer = document.getElementById('videoContainer');
+const filters = {
+  category: document.getElementById('categoryFilter'),
+  resolution: document.getElementById('resolutionFilter'),
+  search: document.getElementById('searchInput')
+};
 
-fetch('videos.json')
+// 初始化加载
+fetch('/videos.json')
   .then(res => res.json())
-  .then(data => {
-    videos = data;
-    renderVideos(data);
-  });
+  .then(renderVideos)
+  .catch(showError);
 
-function renderVideos(filteredVideos) {
-  const grid = document.getElementById('videoGrid');
-  grid.innerHTML = filteredVideos.map(video => `
-    <a href="video.html?id=${video.id}" class="video-card">
-      <img src="${video.preview}" alt="${video.title}">
-      <h3>${video.title}</h3>
-    </a>
+function renderVideos(videos) {
+  videoContainer.innerHTML = videos.map(video => `
+    <article class="video-card" data-features="${JSON.stringify(video.features)}">
+      <a href="/video.html?id=${video.id}">
+        <img src="${video.preview}" 
+             alt="${video.title}" 
+             loading="lazy"
+             class="video-thumbnail">
+        <h3>${video.title}</h3>
+        <div class="meta">
+          <span class="resolution">${video.features.resolution}</span>
+        </div>
+      </a>
+    </article>
   `).join('');
 }
 
-// 筛选与搜索逻辑
-document.querySelectorAll('select, #search').forEach(element => {
-  element.addEventListener('input', () => {
-    const searchTerm = document.getElementById('search').value.toLowerCase();
-    const year = document.getElementById('year').value;
-    const variable = document.getElementById('variable').value;
+// 筛选逻辑
+function handleFilter() {
+  const searchTerm = filters.search.value.toLowerCase();
+  const category = filters.category.value;
+  const resolution = filters.resolution.value;
 
-    const filtered = videos.filter(video => {
-      return (video.title.toLowerCase().includes(searchTerm)) &&
-             (!f1 || video.year === year) &&
-             (!f2 || video.variable === variable);
-    });
-    renderVideos(filtered);
+  Array.from(videoContainer.children).forEach(card => {
+    const features = JSON.parse(card.dataset.features);
+    const titleMatch = card.querySelector('h3').textContent.toLowerCase().includes(searchTerm);
+    const categoryMatch = !category || features.category === category;
+    const resolutionMatch = !resolution || features.resolution === resolution;
+    
+    card.style.display = (titleMatch && categoryMatch && resolutionMatch) ? 'block' : 'none';
   });
+}
+
+// 事件监听
+Object.values(filters).forEach(filter => {
+  filter.addEventListener('input', handleFilter);
 });
