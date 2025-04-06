@@ -1,9 +1,11 @@
 [
   {
-    "id": "1",
+    "id": "1",   
     "title": "2024 2m temperature ",
-    "year": 2024,
-    "category": "2m temperature",
+    "features": {
+      "category":  "2024",
+      "resolution": "2m temperature"
+    },
     "preview": "assets/images/2024 2m temperature.png",
     "description": "2024 hourly 2m temperature"
     "driveid": "1v-nHIzfKW_McyGoSrVr97Vtz-hpF17QD"
@@ -11,8 +13,10 @@
   {
     "id": "2",
     "title": "2024 10m wind ",
-    "year": 2024,
-    "category": "10m wind",
+    "features": {
+      "category":  "2024",
+      "resolution": "10m wind"
+    },
     "preview": "assets/images/2024 10m wind.png",
     "description": "2024 hourly 10m wind"
     "driveid": "14ggyVGME9wFs1WcbgMck9W09-NBUX3Ll"
@@ -20,8 +24,10 @@
   {
     "id": "3",
     "title": "2024 2m msl",
-    "year": 2024,
-    "variable": "2m msl",
+    "features": {
+      "category":  "2024",
+      "resolution": "2m msl"
+    },
     "preview": "assets/images/2024 msl.png",
     "description": "2024 hourly mean sea level pressure"
     "driveid": "18Dz5ImgHxJNodOEdduf5osQeiKpDXNFt"

@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>视频库</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频资源库</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="filters">
-    <select id="year">
-      <option value="">years</option>
-      <option>2024</option>
-      <option>2023</option>
-    </select>
-    <select id="variable">
-      <option value="">variables</option>
-      <option>2m temperature</option>
-      <option>10m wind</option>
-      <option>msl</option>
-    </select>
-    <input type="text" id="search" placeholder="Search...">
-  </div>
-  <div id="videoGrid"></div>
-  <script src="app.js"></script>
+  <header class="header">
+    <h1>视频资源库</h1>
+    <div class="filters">
+      <select id="categoryFilter">
+        <option value="">所有分类</option>
+        <option>自然</option>
+        <option>科技</option>
+      </select>
+      <select id="resolutionFilter">
+        <option value="">所有分辨率</option>
+        <option>4K</option>
+        <option>1080p</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="输入关键词搜索...">
+    </div>
+  </header>
+  
+  <div class="video-grid" id="videoContainer"></div>
+
+  <script src="/js/app.js"></script>
 </body>
 </html>

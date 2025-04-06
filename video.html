@@ -1,34 +1,25 @@
-<!-- video.html -->
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>Video Play</title>
-  <!-- 加载Video.js样式 -->
-  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
-  <!-- 自定义样式 -->
-  <link rel="stylesheet" href="css/player.css">
+  <meta charset="UTF-8">
+  <title>视频播放</title>
+  <link rel="stylesheet" href="https://vjs.zencdn.net/7.20.3/video-js.css">
+  <link rel="stylesheet" href="/css/player.css">
 </head>
 <body>
-  <!-- 播放器容器（关键代码位置） -->
-  <div class="player-wrapper">
-    <video id="myVideo" 
-           class="video-js vjs-16-9" 
-           controls 
-           preload="auto"
-           poster="assets/images/loading-poster.png">
+  <div class="player-container">
+    <video id="myVideo" class="video-js vjs-big-play-centered" controls preload="auto">
       <p class="vjs-no-js">请启用JavaScript观看视频</p>
     </video>
-    <div class="download-section">
-      <a id="downloadBtn" class="download-btn">
-        <i class="fas fa-download"></i> 下载原画质
+    <div class="download-area">
+      <a id="downloadBtn" class="download-button">
+        <svg class="icon"><use xlink:href="#download-icon"></use></svg>
+        下载原片
       </a>
     </div>
   </div>
 
-  <!-- 依赖脚本 -->
   <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-  <script src="https://kit.fontawesome.com/your-kit-id.js"></script> <!-- FontAwesome图标 -->
-  <!-- 业务逻辑 -->
-  <script src="js/video.js"></script>
+  <script src="/js/video.js"></script>
 </body>
 </html>
