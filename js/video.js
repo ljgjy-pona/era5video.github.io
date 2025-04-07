@@ -7,7 +7,7 @@ fetch('/videos.json')
     if (!videoData) throw new Error('视频不存在');
 
     // 生成Google Drive直连
-    const videoUrl = `https://drive.google.com/uc?export=download&id=${videoData.driveid}`;
+    const videoUrl = `https://drive.google.com/uc?export=download&id=${video.driveid}&confirm=yes`;
 
     // 初始化播放器
     const player = videojs('myVideo', {
