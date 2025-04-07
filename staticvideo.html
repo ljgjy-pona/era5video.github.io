@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>视频播放</title>
+  <style>
+    .player-container {
+      margin: 20px auto;
+      max-width: 960px;
+    }
+    .download-area {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .download-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .download-button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="player-container">
+    <!-- Google Drive 内嵌播放器 -->
+    <iframe
+      id="drivePlayer"
+      width="960" 
+      height="640"
+      frameborder="0"
+      allowfullscreen
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+    </iframe>
+
+    <!-- 下载按钮 -->
+    <div class="download-area">
+      <a id="downloadBtn" class="download-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;margin-right:8px">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        下载原片
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // 从 URL 获取视频 ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoId = urlParams.get('driveid');
+
+    if (videoId) {
+      // 设置播放器 iframe
+      const player = document.getElementById('drivePlayer');
+      player.src = `https://drive.google.com/file/d/${videoId}/preview`;
+
+      // 设置下载链接
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.href = `https://drive.google.com/uc?export=download&id=${videoId}&confirm=t`;
+      downloadBtn.download = `${videoId}.mp4`;
+    } else {
+      document.body.innerHTML = '<div style="color:red;text-align:center;padding:20px">缺少视频ID参数</div>';
+    }
+  </script>
+</body>
+</html>
