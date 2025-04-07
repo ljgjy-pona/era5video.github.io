@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>视频播放</title>
   <style>
+    /* 原有样式保持不变 */
     .player-container {
       margin: 20px auto;
       max-width: 960px;
@@ -24,11 +25,17 @@
     .download-button:hover {
       background: #0056b3;
     }
+    .error-message {
+      color: red;
+      text-align: center;
+      padding: 20px;
+      border: 1px solid #ffcccc;
+      margin: 20px;
+    }
   </style>
 </head>
 <body>
   <div class="player-container">
-    <!-- Google Drive 内嵌播放器 -->
     <iframe
       id="drivePlayer"
       width="960" 
@@ -38,7 +45,6 @@
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
     </iframe>
 
-    <!-- 下载按钮 -->
     <div class="download-area">
       <a id="downloadBtn" class="download-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:-2px;margin-right:8px">
@@ -51,23 +57,44 @@
   </div>
 
   <script>
-    // 从 URL 获取视频 ID
+    // 从 URL 获取视频序号 ID
     const urlParams = new URLSearchParams(window.location.search);
-    const videoId = urlParams.get('id');
-    const driveid = urlParams.get('driveid');
-    const title = urlParams.get('title');
+    const paramId = urlParams.get('id');
 
-    if (videoId) {
-      // 设置播放器 iframe
-      const player = document.getElementById('drivePlayer');
-      player.src = `https://drive.google.com/file/d/${driveid}/preview`;
+    // 参数校验
+    if (!paramId) {
+      showError('URL 中缺少视频序号参数，示例：<br><code>video.html?id=1</code>');
+      throw new Error('Missing video ID');
+    }
 
-      // 设置下载链接
-      const downloadBtn = document.getElementById('downloadBtn');
-      downloadBtn.href = `https://drive.google.com/uc?export=download&id=${driveid}&confirm=t`;
-      downloadBtn.download = `${title}.mp4`;
-    } else {
-      document.body.innerHTML = '<div style="color:red;text-align:center;padding:20px">缺少视频ID参数</div>';
+    // 加载视频数据
+    fetch('videos.json')
+      .then(response => {
+        if (!response.ok) throw new Error('视频数据加载失败');
+        return response.json();
+      })
+      .then(videos => {
+        // 根据序号 ID 查找视频
+        const videoData = videos.find(v => v.id == paramId);
+        if (!videoData) throw new Error(`未找到序号为 ${paramId} 的视频`);
+
+        // 更新页面内容
+        const player = document.getElementById('drivePlayer');
+        player.src = `https://drive.google.com/file/d/${videoData.driveid}/preview`;
+
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.href = `https://drive.google.com/uc?export=download&id=${videoData.driveid}&confirm=t`;
+        downloadBtn.download = `${videoData.title}.mp4`;
+        document.title = `${videoData.title} - 视频播放`;
+      })
+      .catch(err => showError(err.message));
+
+    // 显示错误信息
+    function showError(msg) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message';
+      errorDiv.innerHTML = msg;
+      document.body.prepend(errorDiv); // 在页面顶部显示错误
     }
   </script>
 </body>
