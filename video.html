@@ -53,17 +53,19 @@
   <script>
     // 从 URL 获取视频 ID
     const urlParams = new URLSearchParams(window.location.search);
-    const videoId = urlParams.get('driveid');
+    const videoId = urlParams.get('id');
+    const driveId = urlParams.get('driveid');
+    const title = urlParams.get('title');
 
     if (videoId) {
       // 设置播放器 iframe
       const player = document.getElementById('drivePlayer');
-      player.src = `https://drive.google.com/file/d/${videoId}/preview`;
+      player.src = `https://drive.google.com/file/d/${driveid}/preview`;
 
       // 设置下载链接
       const downloadBtn = document.getElementById('downloadBtn');
-      downloadBtn.href = `https://drive.google.com/uc?export=download&id=${videoId}&confirm=t`;
-      downloadBtn.download = `${videoId}.mp4`;
+      downloadBtn.href = `https://drive.google.com/uc?export=download&id=${driveid}&confirm=t`;
+      downloadBtn.download = `${title}.mp4`;
     } else {
       document.body.innerHTML = '<div style="color:red;text-align:center;padding:20px">缺少视频ID参数</div>';
     }
