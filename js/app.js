@@ -43,20 +43,21 @@ function renderVideos(videos) {
 // 筛选逻辑
 function handleFilter() {
   const searchTerm = filters.search.value.toLowerCase();
-  const category = filters.category.value;
-  const resolution = filters.resolution.value;
+  const year = filters.category.value; // 改为year更清晰
+  const variable = filters.resolution.value; // 改为variable更清晰
 
   Array.from(videoContainer.children).forEach(card => {
     const features = JSON.parse(card.dataset.features);
     const titleMatch = card.querySelector('h3').textContent.toLowerCase().includes(searchTerm);
-    const categoryMatch = !category || features.category === category;
-    const resolutionMatch = !resolution || features.resolution === resolution;
+    const yearMatch = !year || features.category === year;
+    const variableMatch = !variable || features.resolution === variable;
     
-    card.style.display = (titleMatch && categoryMatch && resolutionMatch) ? 'block' : 'none';
+    card.style.display = (titleMatch && yearMatch && variableMatch) ? 'block' : 'none';
   });
 }
 
+
 // 事件监听
-Object.values(filters).forEach(filter => {
-  filter.addEventListener('input', handleFilter);
-});
+  filters.category.addEventListener('change', handleFilter);
+filters.resolution.addEventListener('change', handleFilter);
+filters.search.addEventListener('input', handleFilter)；
