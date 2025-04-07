@@ -8,14 +8,14 @@ fetch('/videos.json')
 
     // 生成Google Drive直连
     const driveUrl = `https://drive.google.com/uc?export=view&id=${videoData.driveid}`;
-    const videoUrl = `https://drive.google.com/uc?export=download&id=${videoData.driveid}&confirm=yes`;
+    const videoUrl = `${driveUrl}&t=${Date.now()}`;
 
     // 初始化播放器
     const player = videojs('myVideo', {
       controls: true,
       fluid: true,
       sources: [{
-        src: driveUrl,
+        src:videoUrl,
         type: 'video/mp4'
       }]
     });
