@@ -1,32 +1,32 @@
 [
   {
     "id": 1,   
-    "title": "2024 2m temperature ",
+    "title": "2024_2m_temperature",
     "features": {
       "category":  "2024",
-      "resolution": "2m temperature"
+      "resolution": "2m_temperature"
     },
-    "preview": "/assets/images/2024 2m temperature.png",
+    "preview": "/assets/images/2024_2m_temperature.png",
     "driveid": "1v-nHIzfKW_McyGoSrVr97Vtz-hpF17QD"
   },
   {
     "id": 2,
-    "title": "2024 10m wind ",
+    "title": "2024_10m_wind",
     "features": {
       "category":  "2024",
-      "resolution": "10m wind"
+      "resolution": "10m_wind"
     },
-    "preview": "/assets/images/2024 10m wind.png",
+    "preview": "/assets/images/2024_10m_wind.png",
     "driveid": "14ggyVGME9wFs1WcbgMck9W09-NBUX3Ll"
   },
   {
     "id": 3,
-    "title": "2024 2m msl",
+    "title": "2024_msl",
     "features": {
       "category":  "2024",
-      "resolution": "2m msl"
+      "resolution": "msl"
     },
-    "preview": "/assets/images/2024 msl.png",
+    "preview": "/assets/images/2024_msl.png",
     "driveid": "18Dz5ImgHxJNodOEdduf5osQeiKpDXNFt"
   }
 ]
