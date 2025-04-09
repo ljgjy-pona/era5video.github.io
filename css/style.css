@@ -3,6 +3,18 @@
   --text-dark: #2c3e50;
   --breakpoint-md: 768px;
 }
+/* 添加空状态样式 */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+.empty-state img {
+  width: 120px;
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
 
 /* 响应式网格布局 */
 .video-grid {
@@ -13,6 +25,7 @@
 }
 
 .video-card {
+  display: none;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
