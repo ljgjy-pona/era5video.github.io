@@ -7,10 +7,6 @@ const filters = {
 
 let allVideos = [];
 
-/​**​
- * 渲染视频列表
- * @param {Array} videos - 视频数据数组 
- */
 function renderVideos(videos) {
   if (videos.length === 0) {
     videoContainer.innerHTML = `
