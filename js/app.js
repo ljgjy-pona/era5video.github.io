@@ -107,4 +107,3 @@ filters.search.addEventListener('input', applyFilters);
 
 // 启动应用
 initialize();
-});
