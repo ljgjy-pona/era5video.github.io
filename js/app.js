@@ -5,78 +5,68 @@ const filters = {
   search: document.getElementById('searchInput')
 };
 
-// ========== 核心函数 ==========
+let allVideos = [];
+
 /​**​
  * 渲染视频列表
  * @param {Array} videos - 视频数据数组 
  */
 function renderVideos(videos) {
-  videoContainer.innerHTML = videos.map(video => {
-    // 转义特殊字符防止XSS
-    const safePreview = encodeURI(video.preview);
-    const safeTitle = escapeHtml(video.title);
-    const featuresJSON = JSON.stringify(video.features)
-      .replace(/</g, '\\u003c'); // 转义HTML敏感字符
-
-    return `
-      <article class="video-card" data-features='${featuresJSON}'>
-        <a href="/video.html?id=${video.id}">
-          <img src="${safePreview}" 
-               alt="${safeTitle}" 
-               loading="lazy"
-               onerror="this.src='/assets/images/default.png'"
-               class="video-thumbnail">
-          <h3>${safeTitle}</h3>
-          <div class="meta">
-            <span class="year">${escapeHtml(video.features.category)}</span>
-            <span class="variable">${escapeHtml(video.features.resolution)}</span>
-          </div>
-        </a>
-      </article>
+  if (videos.length === 0) {
+    videoContainer.innerHTML = `
+      <div class="empty-state">
+        <p>没有找到匹配的资源</p>
+      </div>
     `;
-  }).join('');
+  } else {
+    videoContainer.innerHTML = videos.map(video => {
+      const safePreview = encodeURI(video.preview);
+      const safeTitle = escapeHtml(video.title);
+      const featuresJSON = JSON.stringify(video.features)
+        .replace(/</g, '\\u003c');
+
+      return `
+        <article class="video-card">
+          <a href="/video.html?id=${video.id}">
+            <img src="${safePreview}" 
+                 alt="${safeTitle}" 
+                 loading="lazy"
+                 onerror="this.src='/assets/images/default.png'"
+                 class="video-thumbnail">
+            <h3>${safeTitle}</h3>
+            <div class="meta">
+              <span class="year">${escapeHtml(video.features.category)}</span>
+              <span class="variable">${escapeHtml(video.features.resolution)}</span>
+            </div>
+          </a>
+        </article>
+      `;
+    }).join('');
+  }
 }
 
 /​**​
- * 处理筛选逻辑
+ * 应用筛选条件
  */
-function handleFilter() {
+function applyFilters() {
   const searchTerm = filters.search.value.trim().toLowerCase();
-  const selectedYear = filters.category.value;
-  const selectedVariable = filters.resolution.value;
+  const selectedCategory = filters.category.value;
+  const selectedResolution = filters.resolution.value;
 
-  const cards = Array.from(videoContainer.children);
-  let hasVisibleItems = false;
+  const filteredVideos = allVideos.filter(video => {
+    const title = video.title.toLowerCase();
+    const matchesSearch = title.includes(searchTerm);
+    const matchesCategory = !selectedCategory || video.features.category === selectedCategory;
+    const matchesResolution = !selectedResolution || video.features.resolution === selectedResolution;
 
-  cards.forEach(card => {
-    try {
-      const features = JSON.parse(card.dataset.features);
-      const title = card.querySelector('h3').textContent.toLowerCase();
-      
-      const matchesSearch = title.includes(searchTerm);
-      const matchesYear = !selectedYear || features.category === selectedYear;
-      const matchesVariable = !selectedVariable || features.resolution === selectedVariable;
-
-      const shouldShow = matchesSearch && matchesYear && matchesVariable;
-      card.style.display = shouldShow ? 'block' : 'none';
-      
-      if (shouldShow) hasVisibleItems = true;
-    } catch (error) {
-      console.error('卡片解析错误:', error);
-      card.style.display = 'none';
-    }
+    return matchesSearch && matchesCategory && matchesResolution;
   });
 
-  videoContainer.innerHTML = hasVisibleItems ? videoContainer.innerHTML : `
-    <div class="empty-state">
-      <p>没有找到匹配的资源</p>
-    </div>
-  `;
+  renderVideos(filteredVideos);
 }
 
-// ========== 工具函数 ==========
 /​**​
- * HTML转义防止XSS攻击
+ * HTML转义防止XSS
  * @param {string} text 
  * @returns {string}
  */
@@ -100,7 +90,7 @@ function handleError(error) {
   `;
 }
 
-// ========== 初始化加载 ==========
+// 初始化加载
 function initialize() {
   fetch('/videos.json')
     .then(response => {
@@ -108,16 +98,17 @@ function initialize() {
       return response.json();
     })
     .then(videos => {
-      renderVideos(videos);
-      handleFilter(); // 初始筛选
+      allVideos = videos;
+      applyFilters();
     })
     .catch(handleError);
 }
 
-// ========== 事件监听 ==========
-filters.category.addEventListener('change', handleFilter);
-filters.resolution.addEventListener('change', handleFilter);
-filters.search.addEventListener('input', handleFilter);
+// 事件监听
+filters.category.addEventListener('change', applyFilters);
+filters.resolution.addEventListener('change', applyFilters);
+filters.search.addEventListener('input', applyFilters);
 
 // 启动应用
 initialize();
+});
