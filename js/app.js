@@ -5,105 +5,59 @@ const filters = {
   search: document.getElementById('searchInput')
 };
 
-let allVideos = [];
-
-function renderVideos(videos) {
-  if (videos.length === 0) {
-    videoContainer.innerHTML = `
-      <div class="empty-state">
-        <p>没有找到匹配的资源</p>
+// 初始化加载
+fetch('/videos.json')
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status} 错误`);
+    return res.json();
+  })
+  .then(renderVideos)
+  .catch(error => {
+    const errorHtml = `
+      <div class="load-error">
+        <h3>加载失败</h3>
+        <p>原因：${error.message}</p>
+        <button onclick="location.reload()">点击重试</button>
       </div>
     `;
-  } else {
-    videoContainer.innerHTML = videos.map(video => {
-      const safePreview = encodeURI(video.preview);
-      const safeTitle = escapeHtml(video.title);
-      const featuresJSON = JSON.stringify(video.features)
-        .replace(/</g, '\\u003c');
-
-      return `
-        <article class="video-card">
-          <a href="/video.html?id=${video.id}">
-            <img src="${safePreview}" 
-                 alt="${safeTitle}" 
-                 loading="lazy"
-                 onerror="this.src='/assets/images/default.png'"
-                 class="video-thumbnail">
-            <h3>${safeTitle}</h3>
-            <div class="meta">
-              <span class="year">${escapeHtml(video.features.category)}</span>
-              <span class="variable">${escapeHtml(video.features.resolution)}</span>
-            </div>
-          </a>
-        </article>
-      `;
-    }).join('');
-  }
-}
-
-/​**​
- * 应用筛选条件
- */
-function applyFilters() {
-  const searchTerm = filters.search.value.trim().toLowerCase();
-  const selectedCategory = filters.category.value;
-  const selectedResolution = filters.resolution.value;
-
-  const filteredVideos = allVideos.filter(video => {
-    const title = video.title.toLowerCase();
-    const matchesSearch = title.includes(searchTerm);
-    const matchesCategory = !selectedCategory || video.features.category === selectedCategory;
-    const matchesResolution = !selectedResolution || video.features.resolution === selectedResolution;
-
-    return matchesSearch && matchesCategory && matchesResolution;
+    document.getElementById('videoContainer').innerHTML = errorHtml;
   });
 
-  renderVideos(filteredVideos);
+function renderVideos(videos) {
+  videoContainer.innerHTML = videos.map(video => `
+    <article class="video-card" data-features="${JSON.stringify(video.features)}">
+      <a href="/video.html?id=${video.id}">
+        <img src="${video.preview}" 
+             alt="${video.title}" 
+             loading="lazy"
+             class="video-thumbnail">
+        <h3>${video.title}</h3>
+        <div class="meta">
+          <span class="resolution">${video.features.resolution}</span>
+        </div>
+      </a>
+    </article>
+  `).join('');
 }
 
-/​**​
- * HTML转义防止XSS
- * @param {string} text 
- * @returns {string}
- */
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+// 筛选逻辑
+function handleFilter() {
+  const searchTerm = filters.search.value.toLowerCase();
+  const year = filters.category.value; // 改为year更清晰
+  const variable = filters.resolution.value; // 改为variable更清晰
+
+  Array.from(videoContainer.children).forEach(card => {
+    const features = JSON.parse(card.dataset.features);
+    const titleMatch = card.querySelector('h3').textContent.toLowerCase().includes(searchTerm);
+    const yearMatch = !year || features.category === year;
+    const variableMatch = !variable || features.resolution === variable;
+    
+    card.style.display = (titleMatch && yearMatch && variableMatch) ? 'block' : 'none';
+  });
 }
 
-/​**​
- * 统一错误处理
- * @param {Error} error 
- */
-function handleError(error) {
-  console.error('全局错误:', error);
-  videoContainer.innerHTML = `
-    <div class="error-state">
-      <p>数据加载失败: ${error.message}</p>
-      <button onclick="window.location.reload()">重试</button>
-    </div>
-  `;
-}
-
-// 初始化加载
-function initialize() {
-  fetch('/videos.json')
-    .then(response => {
-      if (!response.ok) throw new Error(`HTTP错误 ${response.status}`);
-      return response.json();
-    })
-    .then(videos => {
-      allVideos = videos;
-      applyFilters();
-    })
-    .catch(handleError);
-}
 
 // 事件监听
-filters.category.addEventListener('change', applyFilters);
-filters.resolution.addEventListener('change', applyFilters);
-filters.search.addEventListener('input', applyFilters);
-
-// 启动应用
-initialize();
+  filters.category.addEventListener('change', handleFilter);
+filters.resolution.addEventListener('change', handleFilter);
+filters.search.addEventListener('input', handleFilter)；
