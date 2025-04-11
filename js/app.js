@@ -60,4 +60,4 @@ function handleFilter() {
 // 事件监听
   filters.category.addEventListener('change', handleFilter);
 filters.resolution.addEventListener('change', handleFilter);
-filters.search.addEventListener('input', handleFilter)；
+filters.search.addEventListener('input', handleFilter);
