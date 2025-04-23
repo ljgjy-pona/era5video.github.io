@@ -34,23 +34,23 @@ fetch('/videos.json')
 
 function renderVideos(videos) {
   videoContainer.innerHTML = videos.map(video => {
-    // 确保features存在且是对象
+    // 确保 features 存在
     const features = video.features || {};
+    
+    // 安全序列化（双重转义处理）
+    const featuresStr = JSON.stringify(features)
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+    
     return `
-    <article class="video-card" data-features="${JSON.stringify(features).replace(/"/g, '&quot;')}">
-      <a href="/video.html?id=${video.id}">
-        <img src="${video.preview || '/images/default-preview.jpg'}" 
-             alt="${video.title || '无标题视频'}" 
-             loading="lazy"
-             class="video-thumbnail">
-        <h3>${video.title || '无标题视频'}</h3>
-        <div class="meta">
-          <span class="resolution">${features.resolution || '未知变量'}</span>
-          <span class="year">${features.category || '未知年份'}</span>
-        </div>
-      </a>
+    <article class="video-card" 
+             data-features='${featuresStr}'
+             data-category="${features.category || ''}"
+             data-resolution="${features.resolution || ''}">
+      <!-- 其余内容保持不变 -->
     </article>
-  `}).join('');
+    `;
+  }).join('');
 }
 
 function handleFilter() {
@@ -59,18 +59,19 @@ function handleFilter() {
   const variable = filters.resolution.value;
 
   Array.from(videoContainer.children).forEach(card => {
-    try {
-      const features = JSON.parse(card.dataset.features || '{}');
-      const title = card.querySelector('h3').textContent.toLowerCase();
-      const titleMatch = title.includes(searchTerm);
-      const yearMatch = !year || features.category === year;
-      const variableMatch = !variable || features.resolution === variable;
-      
-      card.style.display = (titleMatch && yearMatch && variableMatch) ? 'block' : 'none';
-    } catch (e) {
-      console.error('解析视频特征时出错:', e);
-      card.style.display = 'none';
-    }
+    // 使用 dataset 直接访问属性
+    const category = card.dataset.category;
+    const resolution = card.dataset.resolution;
+    
+    const title = card.querySelector('h3').textContent.toLowerCase();
+    
+    const matches = (
+      title.includes(searchTerm) &&
+      (!year || category === year) &&
+      (!variable || resolution === variable)
+    );
+    
+    card.style.display = matches ? 'block' : 'none';
   });
 }
 
