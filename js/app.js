@@ -15,32 +15,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 加载数据
   fetch('./videos.json')
-    .then(res => res.json())
-    .then(data => {
-      if (!validateVideoData(data)) {
-        throw new Error('Invalid video data structure');
-      }
-      return data;
-    })
-    .then(renderVideos)
-    .then(initFilters) // 添加这行来初始化过滤器
-    .catch(handleError);
+  .then(res => res.json())
+  .then(data => {
+    if (!validateVideoData(data)) {
+      throw new Error('视频数据格式无效');
+    }
+    return data;
+  })
+  .then(renderVideos)
+  .catch(handleError);
 
-  function handleError(error) {
-    console.error('加载失败:', error);
-    videoContainer.innerHTML = `
-      <div class="error">
-        <p>加载失败: ${error.message}</p>
-        <button onclick="location.reload()">重试</button>
-      </div>
-    `;
-  }
-
-  function validateVideoData(videos) {
-    return Array.isArray(videos) && videos.every(video => {
-      return video.id && video.title && video.features;
-    });
-  }
+function validateVideoData(videos) {
+  return Array.isArray(videos) && videos.every(video => {
+    const hasTitle = !!video.title; // 确保标题存在
+    const validFeatures = video.features && 
+                         typeof video.features === 'object';
+    return video.id && hasTitle && validFeatures;
+  });
+}
 
   function renderVideos(videos) {
     videoContainer.innerHTML = videos.map(video => {
