@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }).join('');
   }
   console.log('已渲染卡片数量:', videoContainer.children.length);
-  
+
   function initFilters() {
     if (!filters.category || !filters.resolution || !filters.search) {
       console.warn('部分筛选器元素未找到');
@@ -77,39 +77,37 @@ document.addEventListener('DOMContentLoaded', function() {
     filters.search.addEventListener('input', debounce(handleFilter, 300));
   }
 
-  function handleFilter() {
-    const searchTerm = filters.search.value.toLowerCase();
-    const year = filters.category.value;
-    const variable = filters.resolution.value;
+function handleFilter() {
+  const searchTerm = filters.search.value.toLowerCase();
+  const year = filters.category.value;
+  const variable = filters.resolution.value;
 
-    Array.from(videoContainer.children).forEach(card => {
-      try {
-        // 直接读取DOM属性，完全跳过JSON解析
-        const category = card.dataset.category;
-        const resolution = card.dataset.resolution;
-        const titleEl = card.querySelector('h3');
-        
-        if (!titleEl) {
-          console.warn('卡片缺少标题元素', card);
-          card.style.display = 'none';
-          return;
-        }
+  Array.from(videoContainer.children).forEach(card => {
+    // 安全获取标题元素
+    const titleEl = card.querySelector('h3');
+    
+    // 如果找不到标题元素，跳过这张卡片
+    if (!titleEl) {
+      console.warn('视频卡片缺少标题元素', card);
+      card.style.display = 'none'; // 或 'block' 根据需求
+      return;
+    }
 
-        const title = titleEl.textContent.toLowerCase();
-        
-        const shouldShow = (
-          title.includes(searchTerm) &&
-          (!year || category === year) &&
-          (!variable || resolution === variable)
-        );
+    // 安全获取属性值
+    const category = card.dataset.category || '';
+    const resolution = card.dataset.resolution || '';
+    const title = titleEl.textContent?.toLowerCase() || '';
 
-        card.style.display = shouldShow ? 'block' : 'none';
-      } catch (e) {
-        console.error('过滤视频时出错:', e);
-        card.style.display = 'none';
-      }
-    });
-  }
+    // 筛选逻辑
+    const shouldShow = (
+      title.includes(searchTerm) &&
+      (!year || category === year) &&
+      (!variable || resolution === variable)
+    );
+
+    card.style.display = shouldShow ? 'block' : 'none';
+  });
+}
 
   // 防抖函数
   function debounce(func, wait) {
