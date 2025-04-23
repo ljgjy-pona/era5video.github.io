@@ -25,7 +25,7 @@ player.on('error', () => {
 
     // 设置下载链接
     const downloadBtn = document.getElementById('downloadBtn');
-    downloadBtn.href = videoUrl;
+    downloadBtn.href = driveUrl;
     downloadBtn.download = `${videoData.title}.mp4`;
 
     // 页面标题
