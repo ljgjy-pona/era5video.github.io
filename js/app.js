@@ -22,7 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return data;
   })
-  .then(renderVideos)
+  .then(data => {
+    if (!validateVideoData(data)) {
+      throw new Error('视频数据格式无效');
+    }
+    renderVideos(data);
+    initFilters(); // 添加这行
+    return data;
+  })
   .catch(handleError);
 
 function validateVideoData(videos) {
@@ -69,12 +76,12 @@ function validateVideoData(videos) {
     filters.search.addEventListener('input', debounce(handleFilter, 300));
   }
 
-function handleFilter() {
-  const searchTerm = filters.search.value.toLowerCase();
-  const year = filters.category.value;
-  const variable = filters.resolution.value;
-
-  Array.from(videoContainer.children).forEach(card => {
+  function handleFilter() {
+    const searchTerm = filters.search.value.toLowerCase();
+    const category = filters.category.value; // 改为 category
+    const resolution = filters.resolution.value; // 改为 resolution
+  
+    Array.from(videoContainer.children).forEach(card => {
     // 安全获取标题元素
     const titleEl = card.querySelector('h3');
     
@@ -110,3 +117,8 @@ function handleFilter() {
     };
   }
 });
+
+function handleError(error) {
+  console.error('加载失败:', error);
+  videoContainer.innerHTML = `<div class="error">加载视频数据失败: ${error.message}</div>`;
+}
