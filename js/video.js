@@ -7,16 +7,21 @@ fetch('/videos.json')
     if (!videoData) throw new Error('视频不存在');
 
     // 生成Google Drive直连
-    const videoUrl = `https://drive.google.com/uc?export=download&id=${videoData.driveid}&confirm=t`;
-    // 初始化播放器
-    const player = videojs('myVideo', {
-      controls: true,
-      fluid: true,
-      sources: [{
-        src: videoUrl,
-        type: 'video/mp4'
-      }]
-    });
+   const driveUrl = `https://drive.google.com/uc?export=download&id=${videoData.driveid}`;
+
+const player = videojs('myVideo', {
+  controls: true,
+  fluid: true,
+  sources: [{
+    src: driveUrl,
+    type: 'video/mp4' // 确保与实际格式匹配
+  }]
+});
+
+// 添加错误处理
+player.on('error', () => {
+  player.createModal('视频加载失败，请尝试下载观看');
+});
 
     // 设置下载链接
     const downloadBtn = document.getElementById('downloadBtn');
