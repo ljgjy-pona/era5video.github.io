@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,   
+    "title": "2024_2m_temperature",
+    "features": {
+      "category":  "2024",
+      "resolution": "temperature"
+    },
+    "preview": "/assets/images/2024_2m_temperature.png",
+    "driveid": "1v-nHIzfKW_McyGoSrVr97Vtz-hpF17QD"
+  },
+  {
+    "id": 2,
+    "title": "2024_10m_wind",
+    "features": {
+      "category":  "2024",
+      "resolution": "wind"
+    },
+    "preview": "/assets/images/2024_10m_wind.png",
+    "driveid": "14ggyVGME9wFs1WcbgMck9W09-NBUX3Ll"
+  },
+  {
+    "id": 3,
+    "title": "2024_msl",
+    "features": {
+      "category":  "2024",
+      "resolution": "msl"
+    },
+    "preview": "/assets/images/2024_msl.png",
+    "driveid": "18Dz5ImgHxJNodOEdduf5osQeiKpDXNFt"
+  },
+{
+    "id": 4,
+    "title": "2024_precipitation",
+    "features": {
+      "category":  "2024",
+      "resolution": "precipitation"
+    },
+    "preview": "/assets/images/2024_precipitation.png",
+    "driveid": "13P6mcxiDorZphNjvdT8Hiu_pg3nQVdde"
+  },
+{
+    "id": 5,
+    "title": "2024_relative_humidity",
+    "features": {
+      "category":  "2024",
+      "resolution": "relative humidity"
+    },
+    "preview": "/assets/images/2024_relative_humidity.png",
+    "driveid": "1nPV796p-RLlkuIbt5pv9UMVTx7WWMUy8"
+  },
+{
+    "id": 6,
+    "title": "2024_200hPa_wind",
+    "features": {
+      "category":  "2024",
+      "resolution": "wind"
+    },
+    "preview": "/assets/images/2024_200hPa_wind.png",
+    "driveid": "1tZ5lSkl7xr8S-6tAtSXJx_UU_RnDN0Fe"
+  },
+{
+    "id": 7,
+    "title": "2024_500hPa_wind",
+    "features": {
+      "category":  "2024",
+      "resolution": "wind"
+    },
+    "preview": "/assets/images/2024_500hPa_wind.png",
+    "driveid": "1BR8eikD9BA10pDmWTBIxLqUOtVmMFqbQ"
+  },
+{
+    "id": 8,
+    "title": "2024_300hPa_temperature",
+    "features": {
+      "category":  "2024",
+      "resolution": "temperature"
+    },
+    "preview": "/assets/images/2024_300hPa_temperature.png",
+    "driveid": "1tZ5lSkl7xr8S-6tAtSXJx_UU_RnDN0Fe"
+  },
+{
+    "id": 9,
+    "title": "2024_700hPa_temperature",
+    "features": {
+      "category":  "2024",
+      "resolution": "temperature"
+    },
+    "preview": "/assets/images/2024_700hPa_temperature.png",
+    "driveid": "1ZZfGqFbfYKIVeqJ_sw6TQgnYSUrECJQH"
+  }
+]
