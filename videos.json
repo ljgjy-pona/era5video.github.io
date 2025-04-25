@@ -91,7 +91,7 @@
   },
 {
     "id": 10,
-    "title": "2024_850Pa_water_vapor_flux",
+    "title": "2024_850hPa_water_vapor_flux",
     "features": {
       "category":  "2024",
       "resolution": "water vapor flux"
